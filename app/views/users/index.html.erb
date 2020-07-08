@@ -23,8 +23,21 @@
               <td>
                  <div><%= attachment_image_tag user, :profile_image, :fill, 50, 50, fallback: "no_image.jpg"%></div>
               </td>
+              <td><%= user.name %></td>
+              <td>フォロー数：<%= user.following.count %></td>
+              <td>フォロワー数：<%= user.followers.count %></td>
               <td>
-                <%= user.name %>
+                <% if user != current_user %>
+                  <% if current_user.following?(user) %>
+                    <%= link_to user_relationships_path(user.id), method: :delete do %>
+                    <div>フォロー外す</div>
+                  <% end %>
+                  <% else %>
+                    <%= link_to user_relationships_path(user.id), method: :post do %>
+                    <div>フォローする</div>
+                    <% end %>
+                  <% end %>
+                <% end %>
               </td>
               <td>
                 <%= link_to "Show",user_path(user.id), class: "user_#{user.id}" %>

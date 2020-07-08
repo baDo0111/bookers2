@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
 	before_action :authenticate_user!
-  # before_action :ensure_correct_user(params[:id]), {only: [:edit, :update, :destroy]}
 
   def show
   	@user = User.find(params[:id])
@@ -45,7 +44,20 @@ class UsersController < ApplicationController
        end
      else
     end
-   end
+  end
+
+  def following
+    @user  = User.find(params[:id])
+    @users = @user.following
+    render 'show_follow'
+  end
+
+  def followers
+    @user  = User.find(params[:id])
+    @users = @user.followers
+    render 'show_follower'
+  end
+
 
   private
   def user_params

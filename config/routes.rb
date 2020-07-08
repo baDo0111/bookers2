@@ -10,4 +10,14 @@ Rails.application.routes.draw do
   resource :favorites, only: [:create, :destroy]
   resources :book_comments, only: [:create, :destroy]
   end
+
+  resources :users do
+  resource :relationships, only: [:create, :destroy]
+      member do
+       get :following, :followers
+      end
+    end
+    resources :parents
+   get 'relationships/create'
+   get 'relationships/destroy'
 end
